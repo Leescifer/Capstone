@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const personalDataSchema = new mongoose.Schema({
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: true, trim: true },
-    middleName: { type: String, required: true, trim: true },
+    middleName: { type: String, trim: true }, 
     birthDate: {
         type: Date,
         required: true,
@@ -21,22 +21,12 @@ const personalDataSchema = new mongoose.Schema({
         }
     },
     gender: { type: String, enum: ['Male', 'Female'], required: true },
-    age: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function (value) {
-                return value >= 16 && value <= 30;
-            },
-            message: "Age must be between 16 and 30."
-        }
-    },
     birthPlace: { type: String, required: true, trim: true },
     occupation: { type: String, enum: ['Student', 'Working', 'Not Working'], required: true },
     civilStatus: { type: String, required: true, trim: true },
     phoneNumber: {
         type: String,
-        unique: true, // This automatically creates an index
+        unique: true,
         required: true,
         validate: {
             validator: function (v) {
@@ -48,12 +38,27 @@ const personalDataSchema = new mongoose.Schema({
     }
 });
 
+// Address Schema
+const userAddressSchema = new mongoose.Schema({
+    purok: {
+        type: String,
+        enum: ['Purok 1', 'Purok 2', 'Purok 3', 'Purok 4', 'Purok 5', 'Purok 6'],
+        required: true
+    },
+    barangay: { type: String, required: true, trim: true },
+    municipality: { type: String, required: true, trim: true },
+    zipCode: { type: Number, required: true },
+    city: { type: String, required: true, trim: true },
+    country: { type: String, required: true, trim: true }
+});
+
 // User Schema
 const userSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true }, // This automatically creates an index
+    email: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true },
     name: { type: String, required: true, trim: true },
     personalData: personalDataSchema, // Embed personal data inside User schema
+    address: userAddressSchema, // Embed address inside User schema
     lastLogin: { type: Date, default: Date.now },
     isVerified: { type: Boolean, default: false },
     resetPasswordToken: String,
@@ -61,6 +66,5 @@ const userSchema = new mongoose.Schema({
     verificationToken: String,
     verificationTokenExpiresAt: Date
 }, { timestamps: true });
-
 
 export const User = mongoose.model("User", userSchema);
