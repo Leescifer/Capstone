@@ -2,21 +2,9 @@ import mongoose from "mongoose";
 
 // Personal Data Schema (Embedded)
 const personalDataSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    middleName: {
-        type: String,
-        required: true,
-        trim: true
-    },
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: true, trim: true },
+    middleName: { type: String, required: true, trim: true },
     birthDate: {
         type: Date,
         required: true,
@@ -25,20 +13,14 @@ const personalDataSchema = new mongoose.Schema({
                 const today = new Date();
                 const minAge = 16;
                 const maxAge = 30;
-
                 const minDate = new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate());
                 const maxDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
-
                 return value >= minDate && value <= maxDate;
             },
             message: "Age must be between 16 and 30 years old."
         }
     },
-    gender: {
-        type: String,
-        enum: ['Male', 'Female'],
-        required: true
-    },
+    gender: { type: String, enum: ['Male', 'Female'], required: true },
     age: {
         type: Number,
         required: true,
@@ -49,24 +31,12 @@ const personalDataSchema = new mongoose.Schema({
             message: "Age must be between 16 and 30."
         }
     },
-    birthPlace: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    occupation: {
-        type: String,
-        enum: ['Student', 'Working', 'Not Working'],
-        required: true
-    },
-    civilStatus: {
-        type: String,
-        required: true,
-        trim: true
-    },
+    birthPlace: { type: String, required: true, trim: true },
+    occupation: { type: String, enum: ['Student', 'Working', 'Not Working'], required: true },
+    civilStatus: { type: String, required: true, trim: true },
     phoneNumber: {
-        type: String, // Changed from Number to String
-        unique: true,
+        type: String,
+        unique: true, // This automatically creates an index
         required: true,
         validate: {
             validator: function (v) {
@@ -80,39 +50,17 @@ const personalDataSchema = new mongoose.Schema({
 
 // User Schema
 const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        trim: true
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
+    email: { type: String, required: true, unique: true }, // This automatically creates an index
+    password: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
     personalData: personalDataSchema, // Embed personal data inside User schema
-    lastLogin: {
-        type: Date,
-        default: Date.now
-    },
-    isVerified: {
-        type: Boolean,
-        default: false  
-    },
+    lastLogin: { type: Date, default: Date.now },
+    isVerified: { type: Boolean, default: false },
     resetPasswordToken: String,
     resetPasswordExpiresAt: Date,
     verificationToken: String,
     verificationTokenExpiresAt: Date
 }, { timestamps: true });
 
-// Index commonly searched fields
-userSchema.index({ email: 1 }, { unique: true });
-userSchema.index({ "personalData.phoneNumber": 1 }, { unique: true });
 
 export const User = mongoose.model("User", userSchema);
