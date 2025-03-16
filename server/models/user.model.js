@@ -34,7 +34,7 @@ const personalDataSchema = new mongoose.Schema({
             },
             message: props => `${props.value} is not a valid Philippine phone number!`
         },
-        set: v => v.replace(/^0/, "+63") // Auto-convert 09XXXXXXXXX to +639XXXXXXXXX
+        set: v => v.replace(/^0/, "+63") // Auto-convert to +639XXXXXXXXX
     }
 });
 

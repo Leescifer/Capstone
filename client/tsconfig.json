@@ -1,44 +1,45 @@
 {
   "compilerOptions": {
-      "target": "ES2020",
-      "useDefineForClassFields": true,
-      "lib": ["ES2020", "DOM", "DOM.Iterable"],
-      "module": "ESNext",
-      "skipLibCheck": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "composite": true,
 
-      "baseUrl": ".",
-      "paths": {
-          "@/*": ["./src/*"]
-      },
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
-      /* Bundler mode */
-      "moduleResolution": "bundler",
-      "allowImportingTsExtensions": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react-jsx",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
 
-      /* Linting */
-      "strict": true,
-      "noUnusedLocals": false,
-      "noUnusedParameters": false,
-      "noFallthroughCasesInSwitch": true,
-      
-      /* Additional Options */
-      "allowJs": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "forceConsistentCasingInFileNames": true,
-      "types": ["node", "react", "react-dom"],
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
 
-      /* Shadcn specific options */
-      "noImplicitAny": false,
-      "strictNullChecks": true,
-      "strictFunctionTypes": true,
-      "strictPropertyInitialization": true,
-      "noImplicitThis": true,
-      "alwaysStrict": true
+    /* Additional Options */
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "react", "react-dom"],
+
+    /* Shadcn specific options */
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true
   },
   "include": [
     "src",
@@ -47,5 +48,9 @@
     "src/shadcn/**/*.ts",
     "src/shadcn/**/*.tsx"
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
