@@ -57,8 +57,8 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true },
     name: { type: String, required: true, trim: true },
-    personalData: personalDataSchema, // Embed personal data inside User schema
-    address: userAddressSchema, // Embed address inside User schema
+    personalData: personalDataSchema, 
+    address: userAddressSchema, 
     lastLogin: { type: Date, default: Date.now },
     isVerified: { type: Boolean, default: false },
     resetPasswordToken: String,

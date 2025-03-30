@@ -8,17 +8,13 @@ const app = express();
 
 const PORT = process.env.PORT || 5000
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
-
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 
+connectDB()
 
 app.listen(PORT, () => {
-    connectDB()
-    console.log(`At port ${PORT}`);
+    console.log(`Server is running at http://localhost:${PORT}`);
 })
 

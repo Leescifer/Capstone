@@ -11,7 +11,7 @@ const generateTokenAndSetCookies = (res, userId) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        maxAge: 7 * 24 * 60 * 60 * 1000 
     });
 };
 
@@ -43,12 +43,17 @@ export const signup = async (req, res) => {
         });
 
         await user.save();
+
+        //jwt
         generateTokenAndSetCookies(res, user._id);
+
+        await sendVerificationEmail(user.email, user.verificationToken);
 
         res.status(201).json({
             success: true,
             message: "User created successfully",
-            user: { ...user._doc, password: undefined, verificationToken: undefined }
+            user: { ...user._doc, 
+            password: undefined }
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
